@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { UserMember, DriveFileItem } from '@/lib/schema';
-import { Folder, FileText, Table, Image as ImageIcon, Film, ArrowLeft, Search, Filter, Eye, HardDrive, RefreshCw } from 'lucide-react';
+import { Folder, FileText, Table, Image as ImageIcon, Film, ArrowLeft, Search, Filter, Eye, HardDrive, RefreshCw, ExternalLink } from 'lucide-react';
 
 interface FileBrowserProps {
   targetMember: UserMember;
@@ -134,44 +134,61 @@ export const FileBrowser: React.FC<FileBrowserProps> = ({
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredFiles.map((file) => (
-            <div
-              key={file.id}
-              onClick={() => onSelectFile(file)}
-              className="neu-outset group p-5 rounded-neu hover:scale-[1.02] transition-all duration-300 cursor-pointer flex flex-col justify-between"
-            >
-              <div className="flex items-start justify-between mb-3">
-                <div className="p-3 neu-inset rounded-2xl">
-                  {getCategoryIcon(file.category)}
+          {filteredFiles.map((file) => {
+            const isMedia = file.category === 'image' || file.category === 'video';
+            const handleCardClick = () => {
+              if (isMedia) {
+                onSelectFile(file);
+              } else if (file.previewUrl || file.downloadUrl) {
+                window.open(file.previewUrl || file.downloadUrl, '_blank', 'noopener,noreferrer');
+              }
+            };
+
+            return (
+              <div
+                key={file.id}
+                onClick={handleCardClick}
+                className="neu-outset group p-5 rounded-neu hover:scale-[1.02] transition-all duration-300 cursor-pointer flex flex-col justify-between"
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div className="p-3 neu-inset rounded-2xl">
+                    {getCategoryIcon(file.category)}
+                  </div>
+
+                  <span className={`text-[10px] font-bold font-mono px-2 py-0.5 rounded-full uppercase ${
+                    file.category === 'pdf' ? 'bg-rose-500/10 text-rose-500' :
+                    file.category === 'excel' ? 'bg-emerald-500/10 text-emerald-500' :
+                    file.category === 'image' ? 'bg-indigo-500/10 text-indigo-500' :
+                    file.category === 'video' ? 'bg-amber-500/10 text-amber-500' : 'bg-gray-500/10 text-gray-400'
+                  }`}>
+                    {file.category}
+                  </span>
                 </div>
 
-                <span className={`text-[10px] font-bold font-mono px-2 py-0.5 rounded-full uppercase ${
-                  file.category === 'pdf' ? 'bg-rose-500/10 text-rose-500' :
-                  file.category === 'excel' ? 'bg-emerald-500/10 text-emerald-500' :
-                  file.category === 'image' ? 'bg-indigo-500/10 text-indigo-500' :
-                  file.category === 'video' ? 'bg-amber-500/10 text-amber-500' : 'bg-gray-500/10 text-gray-400'
-                }`}>
-                  {file.category}
-                </span>
-              </div>
+                <div className="my-2">
+                  <h4 className="text-sm font-bold text-gray-800 dark:text-white group-hover:text-indigo-500 transition-colors line-clamp-2">
+                    {file.name}
+                  </h4>
+                  <p className="text-xs text-gray-400 mt-1 font-mono">
+                    {formatFileSize(file.size)} • {new Date(file.updatedAt).toLocaleDateString()}
+                  </p>
+                </div>
 
-              <div className="my-2">
-                <h4 className="text-sm font-bold text-gray-800 dark:text-white group-hover:text-indigo-500 transition-colors line-clamp-2">
-                  {file.name}
-                </h4>
-                <p className="text-xs text-gray-400 mt-1 font-mono">
-                  {formatFileSize(file.size)} • {new Date(file.updatedAt).toLocaleDateString()}
-                </p>
+                <div className="mt-4 pt-3 border-t border-gray-300/20 dark:border-gray-700/20 flex items-center justify-between text-xs font-semibold text-indigo-600 dark:text-indigo-400">
+                  {isMedia ? (
+                    <span className="flex items-center gap-1.5 text-[11px] text-indigo-600 dark:text-indigo-400">
+                      <Eye className="w-3.5 h-3.5" /> View In-App Preview
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-1.5 text-[11px] text-emerald-600 dark:text-emerald-400">
+                      <ExternalLink className="w-3.5 h-3.5" /> Open in Google Drive
+                    </span>
+                  )}
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                </div>
               </div>
-
-              <div className="mt-4 pt-3 border-t border-gray-300/20 dark:border-gray-700/20 flex items-center justify-between text-xs font-semibold text-indigo-600 dark:text-indigo-400">
-                <span className="flex items-center gap-1 text-[11px]">
-                  <Eye className="w-3.5 h-3.5" /> View In-App Preview
-                </span>
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
