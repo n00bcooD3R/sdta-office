@@ -26,15 +26,20 @@ export async function initDatabase() {
       )
     `;
 
-    // Seed default members if not present
-    for (const m of INITIAL_MEMBERS) {
-      await sql`
-        INSERT INTO users (id, name, email, password, role, photo, job_title, department, status, sdta_folder_id)
-        VALUES (${m.id}, ${m.name}, ${m.email}, ${m.password}, ${m.role}, ${m.photo}, ${m.jobTitle}, ${m.department}, ${m.status}, ${m.sdtaFolderId})
-        ON CONFLICT (email) DO NOTHING
-      `;
+    // Seed default admin ONLY if database table has 0 users
+    const countRes = await sql`SELECT COUNT(*) FROM users`;
+    const totalUsers = parseInt(countRes[0]?.count || '0', 10);
+
+    if (totalUsers === 0) {
+      for (const m of INITIAL_MEMBERS) {
+        await sql`
+          INSERT INTO users (id, name, email, password, role, photo, job_title, department, status, sdta_folder_id)
+          VALUES (${m.id}, ${m.name}, ${m.email}, ${m.password}, ${m.role}, ${m.photo}, ${m.jobTitle}, ${m.department}, ${m.status}, ${m.sdtaFolderId})
+          ON CONFLICT (email) DO NOTHING
+        `;
+      }
+      console.log('✅ Neon database schema & admin users verified.');
     }
-    console.log('✅ Neon database schema & admin users verified.');
   } catch (err) {
     console.warn('Neon database auto-init notice (using memory fallback):', err);
   }
