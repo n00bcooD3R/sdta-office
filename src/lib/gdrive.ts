@@ -1,27 +1,34 @@
 import { google } from 'googleapis';
 import { DriveFileItem } from './schema';
+import { extractFolderId } from './userService';
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY || '';
 const GOOGLE_DRIVE_FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID || '';
 
-export const isGoogleDriveConfigured = Boolean(GOOGLE_API_KEY && GOOGLE_DRIVE_FOLDER_ID);
+export const isGoogleDriveConfigured = Boolean(GOOGLE_API_KEY);
 
 /**
- * Fetch files from Google Drive API scoped to 'sdta' folder
+ * Fetch files from Google Drive API scoped to specific user 'sdta' folder
  */
 export async function getSdtaDriveFiles(userSdtaFolderId: string, memberName: string): Promise<DriveFileItem[]> {
   if (isGoogleDriveConfigured) {
     try {
       const drive = google.drive({ version: 'v3', auth: GOOGLE_API_KEY });
       
-      // Query files inside the sdta folder
+      const targetFolderId = extractFolderId(userSdtaFolderId) || GOOGLE_DRIVE_FOLDER_ID;
+
+      if (!targetFolderId) {
+        return [];
+      }
+
+      // Query files inside the target user's Google Drive folder
       const res = await drive.files.list({
-        q: `'${GOOGLE_DRIVE_FOLDER_ID}' in parents and trashed = false`,
+        q: `'${targetFolderId}' in parents and trashed = false`,
         fields: 'files(id, name, mimeType, size, modifiedTime, thumbnailLink, webViewLink, webContentLink)',
         pageSize: 50,
       });
 
-      if (res.data.files && res.data.files.length > 0) {
+      if (res.data.files) {
         return res.data.files.map((f): DriveFileItem => {
           let category: DriveFileItem['category'] = 'other';
           const mime = f.mimeType || '';
@@ -46,11 +53,11 @@ export async function getSdtaDriveFiles(userSdtaFolderId: string, memberName: st
         });
       }
     } catch (err) {
-      console.warn("Google Drive API fetch error, utilizing scoped SDTA mock repository:", err);
+      console.warn("Google Drive API fetch error:", err);
     }
   }
 
-  // Realistic mock SDTA folder contents custom-tailored per team member
+  // Fallback for unconfigured API
   return getMockSdtaFolderFiles(userSdtaFolderId, memberName);
 }
 
