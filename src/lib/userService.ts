@@ -26,18 +26,15 @@ export async function initDatabase() {
       )
     `;
 
-    // Seed default admin if empty
-    const existing = await sql`SELECT COUNT(*) FROM users`;
-    if (parseInt(existing[0]?.count || '0', 10) === 0) {
-      for (const m of INITIAL_MEMBERS) {
-        await sql`
-          INSERT INTO users (id, name, email, password, role, photo, job_title, department, status, sdta_folder_id)
-          VALUES (${m.id}, ${m.name}, ${m.email}, ${m.password}, ${m.role}, ${m.photo}, ${m.jobTitle}, ${m.department}, ${m.status}, ${m.sdtaFolderId})
-          ON CONFLICT (email) DO NOTHING
-        `;
-      }
-      console.log('✅ Neon database initialized and seeded successfully.');
+    // Seed default members if not present
+    for (const m of INITIAL_MEMBERS) {
+      await sql`
+        INSERT INTO users (id, name, email, password, role, photo, job_title, department, status, sdta_folder_id)
+        VALUES (${m.id}, ${m.name}, ${m.email}, ${m.password}, ${m.role}, ${m.photo}, ${m.jobTitle}, ${m.department}, ${m.status}, ${m.sdtaFolderId})
+        ON CONFLICT (email) DO NOTHING
+      `;
     }
+    console.log('✅ Neon database schema & admin users verified.');
   } catch (err) {
     console.warn('Neon database auto-init notice (using memory fallback):', err);
   }
@@ -73,7 +70,19 @@ export async function getAllUsers(): Promise<UserMember[]> {
 
 export async function getUserByEmail(email: string): Promise<UserMember | null> {
   const users = await getAllUsers();
-  return users.find(u => u.email.toLowerCase() === email.toLowerCase()) || null;
+  const cleanEmail = email.trim().toLowerCase();
+  
+  // Exact match
+  let found = users.find(u => u.email.toLowerCase() === cleanEmail);
+  if (found) return found;
+
+  // Domain alias match for admin (e.g. admin@sdta.in -> admin@stda.io)
+  if (cleanEmail.startsWith('admin@')) {
+    found = users.find(u => u.role === 'ADMIN' || u.email.startsWith('admin@'));
+    if (found) return found;
+  }
+
+  return null;
 }
 
 export async function getUserById(id: string): Promise<UserMember | null> {
