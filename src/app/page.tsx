@@ -72,15 +72,15 @@ export default function LoginPage() {
       {/* Top Bar */}
       <header className="max-w-6xl mx-auto w-full flex items-center justify-between py-4">
         <div className="flex items-center gap-3">
-          <div className="w-11 h-11 neu-outset flex items-center justify-center text-indigo-500 rounded-2xl">
-            <HardDrive className="w-6 h-6" />
+          <div className="p-2 neu-outset flex items-center justify-center bg-white/40 dark:bg-gray-800/40 rounded-2xl">
+            <img src="/stda-logo.png" alt="SENSO TECH DESIGN AND AUTOMATION" className="h-10 w-auto object-contain" />
           </div>
           <div>
             <h1 className="text-xl font-extrabold tracking-tight text-gray-800 dark:text-white">
-              STDA <span className="text-indigo-600 dark:text-indigo-400">DRIVE HUB</span>
+              STDA <span className="text-indigo-600 dark:text-indigo-400">WORKSPACE</span>
             </h1>
-            <p className="text-xs text-gray-500 dark:text-gray-400 font-mono">
-              Neomorphism Soft UI Engine
+            <p className="text-xs font-semibold text-gray-600 dark:text-gray-300">
+              SENSO TECH DESIGN &amp; AUTOMATION
             </p>
           </div>
         </div>
@@ -99,14 +99,14 @@ export default function LoginPage() {
         <div className="neu-outset p-8 sm:p-10 rounded-neu border border-white/20 relative">
           
           <div className="text-center mb-8">
-            <div className="w-16 h-16 neu-outset mx-auto flex items-center justify-center text-indigo-500 rounded-3xl mb-4">
-              <Lock className="w-8 h-8" />
+            <div className="p-3 neu-outset mx-auto flex items-center justify-center bg-white/60 dark:bg-gray-800/60 rounded-3xl mb-4 max-w-[180px]">
+              <img src="/stda-logo.png" alt="SENSO TECH DESIGN AND AUTOMATION" className="h-14 w-auto object-contain" />
             </div>
             <h2 className="text-2xl font-extrabold text-gray-800 dark:text-white">
-              Workspace Access
+              SENSO TECH DESIGN &amp; AUTOMATION
             </h2>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1.5">
-              Neon PostgreSQL Database Auth &amp; Google Cloud Scoped Drive
+            <p className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mt-1">
+              STDA Secure Member Console
             </p>
           </div>
 
@@ -222,8 +222,8 @@ export default function LoginPage() {
       </main>
 
       {/* Footer */}
-      <footer className="max-w-6xl mx-auto w-full text-center py-4 text-xs text-gray-400 font-mono">
-        © 2026 STDA Neomorphic Drive Hub • Built for Netlify &amp; Google Cloud API
+      <footer className="max-w-6xl mx-auto w-full text-center py-4 text-xs text-gray-500 font-medium">
+        © 2026 SENSO TECH DESIGN &amp; AUTOMATION (STDA) • Built with Next.js, Neon DB &amp; Google Cloud API
       </footer>
     </div>
   );

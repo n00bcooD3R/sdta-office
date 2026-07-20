@@ -21,20 +21,20 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="max-w-7xl mx-auto neu-outset px-6 py-3.5 flex items-center justify-between">
         {/* Brand / Logo */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 neu-outset flex items-center justify-center text-indigo-500 dark:text-indigo-400">
-            <HardDrive className="w-5 h-5" />
+          <div className="p-1.5 neu-outset flex items-center justify-center bg-white/40 dark:bg-gray-800/40 rounded-xl">
+            <img src="/stda-logo.png" alt="SENSO TECH DESIGN AND AUTOMATION" className="h-9 w-auto object-contain" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-bold tracking-tight text-gray-800 dark:text-white">
-                STDA <span className="text-indigo-600 dark:text-indigo-400 font-extrabold">DRIVE HUB</span>
+              <h1 className="text-lg font-bold tracking-tight text-gray-800 dark:text-white">
+                STDA <span className="text-indigo-600 dark:text-indigo-400 font-extrabold">HUB</span>
               </h1>
-              <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-500 font-bold border border-indigo-500/20">
+              <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-500 font-bold border border-indigo-500/20 hidden md:inline-block">
                 Neon DB
               </span>
             </div>
-            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
-              Google Cloud API Scoped Workspace
+            <p className="text-[11px] font-semibold text-gray-600 dark:text-gray-300">
+              SENSO TECH DESIGN &amp; AUTOMATION
             </p>
           </div>
         </div>
