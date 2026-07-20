@@ -215,16 +215,18 @@ export const AddMemberModal: React.FC<AddMemberModalProps> = ({
 
           <div>
             <label className="block text-xs font-bold uppercase text-gray-600 dark:text-gray-300 mb-1.5">
-              Avatar Image URL
+              Avatar Photo (Google Drive Link or Image URL)
             </label>
             <input
-              type="url"
+              type="text"
               value={photo}
               onChange={(e) => setPhoto(e.target.value)}
-              placeholder="https://images.unsplash.com/photo-..."
+              placeholder="Paste Google Drive photo link or image URL"
               className="w-full neu-input px-3.5 py-2.5 text-xs text-gray-800 dark:text-white"
             />
-            <p className="text-[10px] text-gray-400 mt-1">Leave empty to auto-generate standard avatar photo.</p>
+            <p className="text-[10px] text-gray-400 mt-1">
+              💡 Paste a Google Drive file link or image URL. Leave empty to auto-generate a fallback avatar.
+            </p>
           </div>
 
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-300/30 dark:border-gray-700/30">

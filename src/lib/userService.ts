@@ -96,6 +96,7 @@ export async function addUser(member: Omit<UserMember, 'id' | 'createdAt'>): Pro
   const newUser: UserMember = {
     ...member,
     id,
+    photo: formatPhotoUrl(member.photo),
     createdAt,
     sdtaFolderId: member.sdtaFolderId || `sdta_folder_${id}`
   };
@@ -114,6 +115,16 @@ export async function addUser(member: Omit<UserMember, 'id' | 'createdAt'>): Pro
 
   mockUsersStore.push(newUser);
   return newUser;
+}
+
+export function formatPhotoUrl(input: string): string {
+  if (!input || !input.trim()) return '';
+  const str = input.trim();
+  const driveFileMatch = str.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || str.match(/id=([a-zA-Z0-9_-]+)/);
+  if (driveFileMatch && driveFileMatch[1]) {
+    return `https://lh3.googleusercontent.com/d/${driveFileMatch[1]}`;
+  }
+  return str;
 }
 
 export function extractFolderId(input: string): string {

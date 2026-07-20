@@ -30,6 +30,26 @@ export const MemberCard: React.FC<MemberCardProps> = ({
     }
   };
 
+  const [imgError, setImgError] = React.useState(false);
+
+  // Convert Google Drive view URLs to direct image URLs
+  const getDirectPhotoSrc = (url: string) => {
+    if (!url) return '';
+    const driveMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
+    if (driveMatch && driveMatch[1]) {
+      return `https://lh3.googleusercontent.com/d/${driveMatch[1]}`;
+    }
+    return url;
+  };
+
+  const photoSrc = getDirectPhotoSrc(member.photo);
+
+  const getInitials = (name: string) => {
+    const parts = name.trim().split(' ');
+    if (parts.length >= 2) return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+    return name.substring(0, 2).toUpperCase();
+  };
+
   return (
     <div
       onClick={() => onSelectMember(member)}
@@ -80,13 +100,20 @@ export const MemberCard: React.FC<MemberCardProps> = ({
       {/* Main ID Card Profile Section */}
       <div className="flex items-center gap-4 my-2">
         {/* Member Photo Frame */}
-        <div className="relative">
-          <div className="w-20 h-20 rounded-neu p-1.5 neu-inset">
-            <img
-              src={member.photo}
-              alt={member.name}
-              className="w-full h-full rounded-2xl object-cover"
-            />
+        <div className="relative flex-shrink-0">
+          <div className="w-20 h-20 rounded-neu p-1.5 neu-inset flex items-center justify-center overflow-hidden">
+            {!imgError && photoSrc ? (
+              <img
+                src={photoSrc}
+                alt={member.name}
+                onError={() => setImgError(true)}
+                className="w-full h-full rounded-2xl object-cover"
+              />
+            ) : (
+              <div className="w-full h-full rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white font-extrabold text-lg tracking-wider shadow-inner">
+                {getInitials(member.name)}
+              </div>
+            )}
           </div>
           {member.role === 'ADMIN' && (
             <span className="absolute -top-1 -right-1 neu-outset w-6 h-6 flex items-center justify-center text-amber-500 rounded-full" title="Admin User">
