@@ -9,7 +9,8 @@ import { AddMemberModal } from '@/components/AddMemberModal';
 import { SecurityPromptModal } from '@/components/SecurityPromptModal';
 import { FileBrowser } from '@/components/FileBrowser';
 import { DriveFileViewerModal } from '@/components/DriveFileViewerModal';
-import { Users, ShieldCheck, UserPlus, HardDrive, FileText, Lock, KeyRound, Sparkles } from 'lucide-react';
+import { EditDriveFolderModal } from '@/components/EditDriveFolderModal';
+import { Users, ShieldCheck, UserPlus, HardDrive, FileText, Lock, KeyRound, Sparkles, Link as LinkIcon } from 'lucide-react';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -22,6 +23,7 @@ export default function DashboardPage() {
   const [selectedMember, setSelectedMember] = useState<UserMember | null>(null);
   const [targetPromptMember, setTargetPromptMember] = useState<UserMember | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditDriveModalOpen, setIsEditDriveModalOpen] = useState(false);
 
   // Files state
   const [driveFiles, setDriveFiles] = useState<DriveFileItem[]>([]);
@@ -169,16 +171,26 @@ export default function DashboardPage() {
                 </p>
               </div>
 
-              {/* Action Button for Admin */}
-              {currentUser?.role === 'ADMIN' && (
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3">
                 <button
-                  onClick={() => setIsAddModalOpen(true)}
-                  className="neu-button px-6 py-3.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 flex items-center gap-2 rounded-2xl flex-shrink-0"
+                  onClick={() => setIsEditDriveModalOpen(true)}
+                  className="neu-button px-5 py-3.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 flex items-center gap-2 rounded-2xl flex-shrink-0"
                 >
-                  <UserPlus className="w-4 h-4" />
-                  <span>Add Team Member</span>
+                  <LinkIcon className="w-4 h-4 text-emerald-500" />
+                  <span>Update My Drive Link</span>
                 </button>
-              )}
+
+                {currentUser?.role === 'ADMIN' && (
+                  <button
+                    onClick={() => setIsAddModalOpen(true)}
+                    className="neu-button px-6 py-3.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 flex items-center gap-2 rounded-2xl flex-shrink-0"
+                  >
+                    <UserPlus className="w-4 h-4" />
+                    <span>Add Team Member</span>
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Quick Stats Grid */}
@@ -278,6 +290,17 @@ export default function DashboardPage() {
       <DriveFileViewerModal
         file={previewFile}
         onClose={() => setPreviewFile(null)}
+      />
+
+      {/* Staff Edit Personal SDTA Drive Link Modal */}
+      <EditDriveFolderModal
+        isOpen={isEditDriveModalOpen}
+        currentFolderId={currentUser?.sdtaFolderId || ''}
+        onClose={() => setIsEditDriveModalOpen(false)}
+        onSuccess={(newFolderId) => {
+          setCurrentUser((prev: any) => ({ ...prev, sdtaFolderId: newFolderId }));
+          fetchSessionAndMembers();
+        }}
       />
     </div>
   );

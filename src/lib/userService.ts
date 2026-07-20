@@ -106,3 +106,36 @@ export async function addUser(member: Omit<UserMember, 'id' | 'createdAt'>): Pro
   mockUsersStore.push(newUser);
   return newUser;
 }
+
+export function extractFolderId(input: string): string {
+  if (!input) return '';
+  const match = input.match(/\/folders\/([a-zA-Z0-9_-]+)/);
+  if (match && match[1]) {
+    return match[1];
+  }
+  return input.trim();
+}
+
+export async function updateUserSdtaFolder(userId: string, rawFolderInput: string): Promise<boolean> {
+  const cleanFolderId = extractFolderId(rawFolderInput);
+  if (!cleanFolderId) return false;
+
+  const sql = getSql();
+  if (sql) {
+    try {
+      await sql`
+        UPDATE users
+        SET sdta_folder_id = ${cleanFolderId}
+        WHERE id = ${userId}
+      `;
+    } catch (err) {
+      console.warn('Error updating sdta_folder_id in Neon DB:', err);
+    }
+  }
+
+  const idx = mockUsersStore.findIndex(u => u.id === userId);
+  if (idx !== -1) {
+    mockUsersStore[idx].sdtaFolderId = cleanFolderId;
+  }
+  return true;
+}
