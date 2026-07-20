@@ -72,7 +72,7 @@ export default function LoginPage() {
       {/* Top Bar */}
       <header className="max-w-6xl mx-auto w-full flex items-center justify-between py-4">
         <div className="flex items-center gap-3">
-          <div className="p-2 neu-outset flex items-center justify-center bg-white/40 dark:bg-gray-800/40 rounded-2xl">
+          <div className="p-2 neu-outset flex items-center justify-center bg-white rounded-2xl">
             <img src="/stda-logo.png" alt="SENSO TECH DESIGN AND AUTOMATION" className="h-10 w-auto object-contain" />
           </div>
           <div>
@@ -99,8 +99,8 @@ export default function LoginPage() {
         <div className="neu-outset p-8 sm:p-10 rounded-neu border border-white/20 relative">
           
           <div className="text-center mb-8">
-            <div className="p-3 neu-outset mx-auto flex items-center justify-center bg-white/60 dark:bg-gray-800/60 rounded-3xl mb-4 max-w-[180px]">
-              <img src="/stda-logo.png" alt="SENSO TECH DESIGN AND AUTOMATION" className="h-14 w-auto object-contain" />
+            <div className="p-4 neu-outset mx-auto flex items-center justify-center bg-white rounded-3xl mb-4 max-w-[200px]">
+              <img src="/stda-logo.png" alt="SENSO TECH DESIGN AND AUTOMATION" className="h-16 w-auto object-contain" />
             </div>
             <h2 className="text-2xl font-extrabold text-gray-800 dark:text-white">
               SENSO TECH DESIGN &amp; AUTOMATION

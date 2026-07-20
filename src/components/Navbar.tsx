@@ -21,7 +21,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="max-w-7xl mx-auto neu-outset px-6 py-3.5 flex items-center justify-between">
         {/* Brand / Logo */}
         <div className="flex items-center gap-3">
-          <div className="p-1.5 neu-outset flex items-center justify-center bg-white/40 dark:bg-gray-800/40 rounded-xl">
+          <div className="p-2 neu-outset flex items-center justify-center bg-white rounded-xl">
             <img src="/stda-logo.png" alt="SENSO TECH DESIGN AND AUTOMATION" className="h-9 w-auto object-contain" />
           </div>
           <div>
