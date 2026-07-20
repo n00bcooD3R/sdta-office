@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Soft Neomorphic Light Theme Variables */
+  --neu-bg: #e6ecf5;
+  --neu-card: #e6ecf5;
+  --neu-text: #2d3748;
+  --neu-muted: #718096;
+  --neu-accent: #4f46e5;
+  --neu-accent-glow: rgba(79, 70, 229, 0.4);
+  --neu-border: #d0d7de;
+  
+  --shadow-neu-outset: 8px 8px 16px #c4cbd4, -8px -8px 16px #ffffff;
+  --shadow-neu-inset: inset 5px 5px 10px #c4cbd4, inset -5px -5px 10px #ffffff;
+  --shadow-neu-pressed: inset 3px 3px 6px #b8c0cc, inset -3px -3px 6px #ffffff;
+  --shadow-neu-sm: 4px 4px 8px #c4cbd4, -4px -4px 8px #ffffff;
+}
+
+.dark {
+  /* Soft Neomorphic Dark Theme Variables */
+  --neu-bg: #181c24;
+  --neu-card: #1e2430;
+  --neu-text: #e2e8f0;
+  --neu-muted: #94a3b8;
+  --neu-accent: #6366f1;
+  --neu-accent-glow: rgba(99, 102, 241, 0.4);
+  --neu-border: #2a3242;
+
+  --shadow-neu-outset: 8px 8px 18px #12151b, -8px -8px 18px #242d3c;
+  --shadow-neu-inset: inset 5px 5px 10px #12151b, inset -5px -5px 10px #242d3c;
+  --shadow-neu-pressed: inset 3px 3px 6px #101217, inset -3px -3px 6px #283244;
+  --shadow-neu-sm: 4px 4px 10px #12151b, -4px -4px 10px #242d3c;
+}
+
+body {
+  background-color: var(--neu-bg);
+  color: var(--neu-text);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Custom Neomorphic Utility Classes */
+.neu-outset {
+  background: var(--neu-card);
+  box-shadow: var(--shadow-neu-outset);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.neu-inset {
+  background: var(--neu-card);
+  box-shadow: var(--shadow-neu-inset);
+  border-radius: 14px;
+}
+
+.neu-pressed {
+  box-shadow: var(--shadow-neu-pressed) !important;
+}
+
+.neu-button {
+  background: var(--neu-card);
+  box-shadow: var(--shadow-neu-outset);
+  border-radius: 16px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.neu-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 10px 10px 20px #b8c0cc, -10px -10px 20px #ffffff;
+}
+
+.dark .neu-button:hover {
+  box-shadow: 10px 10px 22px #0f1217, -10px -10px 22px #283244;
+}
+
+.neu-button:active {
+  transform: translateY(1px);
+  box-shadow: var(--shadow-neu-pressed);
+}
+
+.neu-input {
+  background: var(--neu-card);
+  box-shadow: var(--shadow-neu-inset);
+  border-radius: 14px;
+  border: 1px solid transparent;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.neu-input:focus {
+  border-color: var(--neu-accent);
+  box-shadow: var(--shadow-neu-inset), 0 0 8px var(--neu-accent-glow);
+}
+
+/* Neomorphic Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--neu-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neu-card);
+  box-shadow: var(--shadow-neu-sm);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neu-accent);
+}

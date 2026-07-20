@@ -1,0 +1,130 @@
+{
+  "nodes": [
+    {
+      "id": "src/app/api/auth/login/route.ts",
+      "label": "route.ts",
+      "type": "API Route",
+      "path": "src/app/api/auth/login/route.ts"
+    },
+    {
+      "id": "src/app/api/auth/logout/route.ts",
+      "label": "route.ts",
+      "type": "API Route",
+      "path": "src/app/api/auth/logout/route.ts"
+    },
+    {
+      "id": "src/app/api/auth/me/route.ts",
+      "label": "route.ts",
+      "type": "API Route",
+      "path": "src/app/api/auth/me/route.ts"
+    },
+    {
+      "id": "src/app/api/drive/excel-sample/route.ts",
+      "label": "route.ts",
+      "type": "API Route",
+      "path": "src/app/api/drive/excel-sample/route.ts"
+    },
+    {
+      "id": "src/app/api/drive/files/route.ts",
+      "label": "route.ts",
+      "type": "API Route",
+      "path": "src/app/api/drive/files/route.ts"
+    },
+    {
+      "id": "src/app/api/users/route.ts",
+      "label": "route.ts",
+      "type": "API Route",
+      "path": "src/app/api/users/route.ts"
+    },
+    {
+      "id": "src/app/api/users/verify-access/route.ts",
+      "label": "route.ts",
+      "type": "API Route",
+      "path": "src/app/api/users/verify-access/route.ts"
+    },
+    {
+      "id": "src/app/dashboard/page.tsx",
+      "label": "page.tsx",
+      "type": "Lib",
+      "path": "src/app/dashboard/page.tsx"
+    },
+    {
+      "id": "src/app/layout.tsx",
+      "label": "layout.tsx",
+      "type": "Lib",
+      "path": "src/app/layout.tsx"
+    },
+    {
+      "id": "src/app/page.tsx",
+      "label": "page.tsx",
+      "type": "Lib",
+      "path": "src/app/page.tsx"
+    },
+    {
+      "id": "src/components/AddMemberModal.tsx",
+      "label": "AddMemberModal.tsx",
+      "type": "Component",
+      "path": "src/components/AddMemberModal.tsx"
+    },
+    {
+      "id": "src/components/DriveFileViewerModal.tsx",
+      "label": "DriveFileViewerModal.tsx",
+      "type": "Component",
+      "path": "src/components/DriveFileViewerModal.tsx"
+    },
+    {
+      "id": "src/components/FileBrowser.tsx",
+      "label": "FileBrowser.tsx",
+      "type": "Component",
+      "path": "src/components/FileBrowser.tsx"
+    },
+    {
+      "id": "src/components/MemberCard.tsx",
+      "label": "MemberCard.tsx",
+      "type": "Component",
+      "path": "src/components/MemberCard.tsx"
+    },
+    {
+      "id": "src/components/Navbar.tsx",
+      "label": "Navbar.tsx",
+      "type": "Component",
+      "path": "src/components/Navbar.tsx"
+    },
+    {
+      "id": "src/components/SecurityPromptModal.tsx",
+      "label": "SecurityPromptModal.tsx",
+      "type": "Component",
+      "path": "src/components/SecurityPromptModal.tsx"
+    },
+    {
+      "id": "src/lib/db.ts",
+      "label": "db.ts",
+      "type": "Lib",
+      "path": "src/lib/db.ts"
+    },
+    {
+      "id": "src/lib/gdrive.ts",
+      "label": "gdrive.ts",
+      "type": "Lib",
+      "path": "src/lib/gdrive.ts"
+    },
+    {
+      "id": "src/lib/schema.ts",
+      "label": "schema.ts",
+      "type": "Lib",
+      "path": "src/lib/schema.ts"
+    },
+    {
+      "id": "src/lib/userService.ts",
+      "label": "userService.ts",
+      "type": "Lib",
+      "path": "src/lib/userService.ts"
+    }
+  ],
+  "edges": [],
+  "metadata": {
+    "projectName": "STDA Neomorphic Drive Hub",
+    "totalFiles": 20,
+    "generatedAt": "2026-07-20T06:40:32.795Z"
+  }
+}
