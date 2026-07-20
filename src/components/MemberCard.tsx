@@ -2,13 +2,14 @@
 
 import React from 'react';
 import { UserMember } from '@/lib/schema';
-import { Folder, Lock, ShieldCheck, Mail, Briefcase, ChevronRight, KeyRound, Trash2 } from 'lucide-react';
+import { Folder, Lock, ShieldCheck, Mail, Briefcase, ChevronRight, KeyRound, Trash2, Pencil } from 'lucide-react';
 
 interface MemberCardProps {
   member: UserMember;
   currentUser: any;
   onSelectMember: (member: UserMember) => void;
   onDeleteMember?: (member: UserMember) => void;
+  onEditMember?: (member: UserMember) => void;
 }
 
 export const MemberCard: React.FC<MemberCardProps> = ({
@@ -16,6 +17,7 @@ export const MemberCard: React.FC<MemberCardProps> = ({
   currentUser,
   onSelectMember,
   onDeleteMember,
+  onEditMember,
 }) => {
   const isSelf = currentUser?.id === member.id;
   const isAdmin = currentUser?.role === 'ADMIN';
@@ -27,6 +29,13 @@ export const MemberCard: React.FC<MemberCardProps> = ({
     e.stopPropagation();
     if (onDeleteMember) {
       onDeleteMember(member);
+    }
+  };
+
+  const handleEdit = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onEditMember) {
+      onEditMember(member);
     }
   };
 
@@ -72,7 +81,7 @@ export const MemberCard: React.FC<MemberCardProps> = ({
           </div>
         </div>
 
-        {/* Status Indicator & Admin Delete Button */}
+        {/* Status Indicator & Admin Edit / Delete Buttons */}
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5 neu-inset px-2.5 py-1 rounded-full">
             <span className={`w-2 h-2 rounded-full ${
@@ -84,6 +93,16 @@ export const MemberCard: React.FC<MemberCardProps> = ({
               {member.status}
             </span>
           </div>
+
+          {isAdmin && onEditMember && (
+            <button
+              onClick={handleEdit}
+              className="neu-button p-1.5 text-indigo-500 hover:text-indigo-700 transition-colors"
+              title={`Edit profile for ${member.name}`}
+            >
+              <Pencil className="w-3.5 h-3.5" />
+            </button>
+          )}
 
           {isAdmin && !isSelf && onDeleteMember && (
             <button

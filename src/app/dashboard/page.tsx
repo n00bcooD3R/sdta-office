@@ -11,6 +11,7 @@ import { FileBrowser } from '@/components/FileBrowser';
 import { DriveFileViewerModal } from '@/components/DriveFileViewerModal';
 import { EditDriveFolderModal } from '@/components/EditDriveFolderModal';
 import { ChangePasswordModal } from '@/components/ChangePasswordModal';
+import { EditMemberModal } from '@/components/EditMemberModal';
 import { Users, ShieldCheck, UserPlus, HardDrive, FileText, Lock, KeyRound, Sparkles, Link as LinkIcon } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -23,6 +24,7 @@ export default function DashboardPage() {
   // Active view state
   const [selectedMember, setSelectedMember] = useState<UserMember | null>(null);
   const [targetPromptMember, setTargetPromptMember] = useState<UserMember | null>(null);
+  const [editingMember, setEditingMember] = useState<UserMember | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditDriveModalOpen, setIsEditDriveModalOpen] = useState(false);
   const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);
@@ -287,6 +289,7 @@ export default function DashboardPage() {
                     currentUser={currentUser}
                     onSelectMember={handleSelectMemberTile}
                     onDeleteMember={handleDeleteMember}
+                    onEditMember={(m) => setEditingMember(m)}
                   />
                 ))}
               </div>
@@ -300,6 +303,14 @@ export default function DashboardPage() {
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         onMemberAdded={handleMemberAdded}
+      />
+
+      {/* Admin Edit Member Details Modal */}
+      <EditMemberModal
+        isOpen={Boolean(editingMember)}
+        member={editingMember}
+        onClose={() => setEditingMember(null)}
+        onMemberUpdated={fetchSessionAndMembers}
       />
 
       {/* Staff Password Security Verification Modal */}

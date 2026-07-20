@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getAllUsers, addUser, getUserByEmail, deleteUser } from '@/lib/userService';
+import { getAllUsers, addUser, getUserByEmail, deleteUser, updateUserFull } from '@/lib/userService';
 
 export async function GET() {
   try {
@@ -69,6 +69,23 @@ export async function POST(request: Request) {
     });
   } catch (err: any) {
     return NextResponse.json({ error: 'Failed to add team member' }, { status: 500 });
+  }
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const body = await request.json();
+    const { id, name, email, password, jobTitle, department, sdtaFolderId, photo } = body;
+
+    if (!id) {
+      return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+    }
+
+    await updateUserFull(id, { name, email, password, jobTitle, department, sdtaFolderId, photo });
+
+    return NextResponse.json({ success: true, message: 'Member details updated successfully' });
+  } catch (err: any) {
+    return NextResponse.json({ error: 'Failed to update member' }, { status: 500 });
   }
 }
 

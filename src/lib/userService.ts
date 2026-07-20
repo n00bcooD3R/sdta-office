@@ -194,3 +194,36 @@ export async function updateUserPassword(userId: string, newPassword: string): P
   }
   return true;
 }
+
+export async function updateUserFull(id: string, data: Partial<UserMember>): Promise<boolean> {
+  const sql = getSql();
+
+  const cleanPhoto = data.photo ? formatPhotoUrl(data.photo) : undefined;
+  const cleanSdtaFolder = data.sdtaFolderId ? extractFolderId(data.sdtaFolderId) : undefined;
+
+  if (sql) {
+    try {
+      if (data.name) await sql`UPDATE users SET name = ${data.name} WHERE id = ${id}`;
+      if (data.email) await sql`UPDATE users SET email = ${data.email} WHERE id = ${id}`;
+      if (data.password) await sql`UPDATE users SET password = ${data.password} WHERE id = ${id}`;
+      if (data.jobTitle) await sql`UPDATE users SET job_title = ${data.jobTitle} WHERE id = ${id}`;
+      if (data.department) await sql`UPDATE users SET department = ${data.department} WHERE id = ${id}`;
+      if (cleanPhoto) await sql`UPDATE users SET photo = ${cleanPhoto} WHERE id = ${id}`;
+      if (cleanSdtaFolder) await sql`UPDATE users SET sdta_folder_id = ${cleanSdtaFolder} WHERE id = ${id}`;
+    } catch (err) {
+      console.warn('Error updating user in Neon DB:', err);
+    }
+  }
+
+  const idx = mockUsersStore.findIndex(u => u.id === id);
+  if (idx !== -1) {
+    if (data.name) mockUsersStore[idx].name = data.name;
+    if (data.email) mockUsersStore[idx].email = data.email;
+    if (data.password) mockUsersStore[idx].password = data.password;
+    if (data.jobTitle) mockUsersStore[idx].jobTitle = data.jobTitle;
+    if (data.department) mockUsersStore[idx].department = data.department;
+    if (cleanPhoto) mockUsersStore[idx].photo = cleanPhoto;
+    if (cleanSdtaFolder) mockUsersStore[idx].sdtaFolderId = cleanSdtaFolder;
+  }
+  return true;
+}
