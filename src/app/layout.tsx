@@ -4,6 +4,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "SENSO TECH DESIGN & AUTOMATION (STDA) | Secure Workspace",
   description: "SENSO TECH DESIGN & AUTOMATION enterprise drive repository with dual Admin & Staff consoles, Neomorphism theme, and Neon PostgreSQL database.",
+  icons: {
+    icon: "/stda-logo.png",
+    shortcut: "/stda-logo.png",
+    apple: "/stda-logo.png",
+  },
 };
 
 export default function RootLayout({
