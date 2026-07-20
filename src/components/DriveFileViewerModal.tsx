@@ -14,8 +14,10 @@ export const DriveFileViewerModal: React.FC<DriveFileViewerModalProps> = ({ file
   const [excelSheets, setExcelSheets] = useState<{ name: string; rows: any[] }[]>([]);
   const [activeSheetIndex, setActiveSheetIndex] = useState(0);
   const [loadingExcel, setLoadingExcel] = useState(false);
+  const [imgSrcIndex, setImgSrcIndex] = useState(0);
 
   useEffect(() => {
+    setImgSrcIndex(0);
     if (file && file.category === 'excel') {
       fetchExcelData();
     }
@@ -54,8 +56,6 @@ export const DriveFileViewerModal: React.FC<DriveFileViewerModalProps> = ({ file
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
   };
-
-  const [imgSrcIndex, setImgSrcIndex] = useState(0);
 
   // Generate robust image sources for Google Drive files
   const getImageSources = (item: DriveFileItem) => {
