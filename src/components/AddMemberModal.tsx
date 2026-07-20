@@ -22,6 +22,7 @@ export const AddMemberModal: React.FC<AddMemberModalProps> = ({
   const [jobTitle, setJobTitle] = useState('');
   const [department, setDepartment] = useState('');
   const [photo, setPhoto] = useState('');
+  const [sdtaFolderId, setSdtaFolderId] = useState('');
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -51,6 +52,7 @@ export const AddMemberModal: React.FC<AddMemberModalProps> = ({
           department: department || 'Operations',
           photo: photo || `https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80`,
           status: 'active',
+          sdtaFolderId: sdtaFolderId.trim() || undefined,
         }),
       });
 
@@ -195,6 +197,20 @@ export const AddMemberModal: React.FC<AddMemberModalProps> = ({
                 className="w-full neu-input px-3.5 py-2.5 text-xs text-gray-800 dark:text-white"
               />
             </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold uppercase text-gray-600 dark:text-gray-300 mb-1.5">
+              Google Drive SDTA Folder ID (Optional)
+            </label>
+            <input
+              type="text"
+              value={sdtaFolderId}
+              onChange={(e) => setSdtaFolderId(e.target.value)}
+              placeholder="e.g. 1A2B3C4D5E6F7G8H9I0J or leave empty"
+              className="w-full neu-input px-3.5 py-2.5 text-xs text-gray-800 dark:text-white"
+            />
+            <p className="text-[10px] text-gray-400 mt-1">Specific Google Drive subfolder ID assigned to this member.</p>
           </div>
 
           <div>

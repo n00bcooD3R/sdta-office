@@ -27,7 +27,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, password, role, photo, jobTitle, department, status } = body;
+    const { name, email, password, role, photo, jobTitle, department, status, sdtaFolderId } = body;
 
     if (!name || !email || !password) {
       return NextResponse.json({ error: 'Name, email, and password are required' }, { status: 400 });
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
       jobTitle: jobTitle || 'Staff Member',
       department: department || 'General Operations',
       status: status || 'active',
-      sdtaFolderId: `sdta_folder_${name.toLowerCase().replace(/\s+/g, '_')}`
+      sdtaFolderId: sdtaFolderId || `sdta_folder_${name.toLowerCase().replace(/\s+/g, '_')}`
     });
 
     return NextResponse.json({
