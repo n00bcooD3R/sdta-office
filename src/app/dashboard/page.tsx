@@ -111,6 +111,18 @@ export default function DashboardPage() {
     setMembers((prev) => [...prev, newMember]);
   };
 
+  const handleDeleteMember = async (member: UserMember) => {
+    if (!confirm(`Are you sure you want to delete team member "${member.name}"?`)) return;
+    try {
+      const res = await fetch(`/api/users?id=${member.id}`, { method: 'DELETE' });
+      if (res.ok) {
+        setMembers((prev) => prev.filter((m) => m.id !== member.id));
+      }
+    } catch (err) {
+      console.error('Failed to delete member:', err);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-neu-bg text-gray-500">
@@ -166,7 +178,7 @@ export default function DashboardPage() {
                 </h2>
                 <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1 max-w-2xl">
                   {currentUser?.role === 'ADMIN'
-                    ? 'Full Administrative Access. You can add new members and inspect all member SDTA Google Drive folders directly.'
+                    ? 'Full Administrative Access. You can add new members, delete members, and inspect all member SDTA Google Drive folders directly.'
                     : 'Staff Access Mode. Select a team member card below to open their SDTA Drive directory (password verification required for secondary members).'}
                 </p>
               </div>
@@ -264,6 +276,7 @@ export default function DashboardPage() {
                     member={member}
                     currentUser={currentUser}
                     onSelectMember={handleSelectMemberTile}
+                    onDeleteMember={handleDeleteMember}
                   />
                 ))}
               </div>

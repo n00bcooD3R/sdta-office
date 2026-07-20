@@ -6,8 +6,8 @@ import { HardDrive, ShieldCheck, UserCheck, Lock, Mail, ArrowRight, Sun, Moon, D
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('admin@stda.io');
-  const [password, setPassword] = useState('admin');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [darkMode, setDarkMode] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -108,46 +108,6 @@ export default function LoginPage() {
             <p className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mt-1">
               STDA Secure Member Console
             </p>
-          </div>
-
-          {/* Quick Demo Switcher */}
-          <div className="mb-6">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 text-center mb-2.5">
-              ⚡ Quick Select Demo Credentials
-            </p>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                type="button"
-                onClick={() => selectDemoAccount('admin@stda.io', 'admin')}
-                className={`p-3 rounded-xl text-left transition-all ${
-                  email === 'admin@stda.io'
-                    ? 'neu-pressed border border-amber-500/40 text-amber-600 dark:text-amber-400'
-                    : 'neu-button text-gray-700 dark:text-gray-300'
-                }`}
-              >
-                <div className="flex items-center gap-1.5 text-xs font-extrabold">
-                  <ShieldCheck className="w-4 h-4 text-amber-500" />
-                  <span>Admin Console</span>
-                </div>
-                <p className="text-[10px] text-gray-400 font-mono mt-1">admin@stda.io</p>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => selectDemoAccount('elena@stda.io', 'elena')}
-                className={`p-3 rounded-xl text-left transition-all ${
-                  email === 'elena@stda.io'
-                    ? 'neu-pressed border border-emerald-500/40 text-emerald-600 dark:text-emerald-400'
-                    : 'neu-button text-gray-700 dark:text-gray-300'
-                }`}
-              >
-                <div className="flex items-center gap-1.5 text-xs font-extrabold">
-                  <UserCheck className="w-4 h-4 text-emerald-500" />
-                  <span>Staff Console</span>
-                </div>
-                <p className="text-[10px] text-gray-400 font-mono mt-1">elena@stda.io</p>
-              </button>
-            </div>
           </div>
 
           {/* Error Message */}

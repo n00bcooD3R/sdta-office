@@ -139,3 +139,17 @@ export async function updateUserSdtaFolder(userId: string, rawFolderInput: strin
   }
   return true;
 }
+
+export async function deleteUser(id: string): Promise<boolean> {
+  const sql = getSql();
+  if (sql) {
+    try {
+      await sql`DELETE FROM users WHERE id = ${id}`;
+    } catch (err) {
+      console.warn('Error deleting user from Neon DB:', err);
+    }
+  }
+
+  mockUsersStore = mockUsersStore.filter(u => u.id !== id);
+  return true;
+}

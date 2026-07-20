@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getAllUsers, addUser, getUserByEmail } from '@/lib/userService';
+import { getAllUsers, addUser, getUserByEmail, deleteUser } from '@/lib/userService';
 
 export async function GET() {
   try {
@@ -69,5 +69,20 @@ export async function POST(request: Request) {
     });
   } catch (err: any) {
     return NextResponse.json({ error: 'Failed to add team member' }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    if (!id) {
+      return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+    }
+
+    await deleteUser(id);
+    return NextResponse.json({ success: true });
+  } catch (err: any) {
+    return NextResponse.json({ error: 'Failed to delete member' }, { status: 500 });
   }
 }

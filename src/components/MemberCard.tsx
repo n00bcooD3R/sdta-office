@@ -2,24 +2,33 @@
 
 import React from 'react';
 import { UserMember } from '@/lib/schema';
-import { Folder, Lock, ShieldCheck, Mail, Briefcase, ChevronRight, KeyRound } from 'lucide-react';
+import { Folder, Lock, ShieldCheck, Mail, Briefcase, ChevronRight, KeyRound, Trash2 } from 'lucide-react';
 
 interface MemberCardProps {
   member: UserMember;
   currentUser: any;
   onSelectMember: (member: UserMember) => void;
+  onDeleteMember?: (member: UserMember) => void;
 }
 
 export const MemberCard: React.FC<MemberCardProps> = ({
   member,
   currentUser,
   onSelectMember,
+  onDeleteMember,
 }) => {
   const isSelf = currentUser?.id === member.id;
   const isAdmin = currentUser?.role === 'ADMIN';
 
   // Staff accessing someone else requires entering target password
   const requiresPassword = !isAdmin && !isSelf;
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onDeleteMember) {
+      onDeleteMember(member);
+    }
+  };
 
   return (
     <div
@@ -43,16 +52,28 @@ export const MemberCard: React.FC<MemberCardProps> = ({
           </div>
         </div>
 
-        {/* Status Indicator */}
-        <div className="flex items-center gap-1.5 neu-inset px-2.5 py-1 rounded-full">
-          <span className={`w-2 h-2 rounded-full ${
-            member.status === 'active' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]' :
-            member.status === 'away' ? 'bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.6)]' :
-            'bg-gray-400'
-          }`} />
-          <span className="text-[10px] font-semibold text-gray-500 dark:text-gray-400 capitalize">
-            {member.status}
-          </span>
+        {/* Status Indicator & Admin Delete Button */}
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 neu-inset px-2.5 py-1 rounded-full">
+            <span className={`w-2 h-2 rounded-full ${
+              member.status === 'active' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]' :
+              member.status === 'away' ? 'bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.6)]' :
+              'bg-gray-400'
+            }`} />
+            <span className="text-[10px] font-semibold text-gray-500 dark:text-gray-400 capitalize">
+              {member.status}
+            </span>
+          </div>
+
+          {isAdmin && !isSelf && onDeleteMember && (
+            <button
+              onClick={handleDelete}
+              className="neu-button p-1.5 text-rose-500 hover:text-rose-700 transition-colors"
+              title={`Delete member ${member.name}`}
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
       </div>
 
