@@ -8,11 +8,14 @@ export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Ensure light mode is default on initial mount
+    document.documentElement.classList.remove('dark');
+
     // Check if user is already logged in
     fetch('/api/auth/me')
       .then((res) => res.json())

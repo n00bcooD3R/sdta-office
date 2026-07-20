@@ -19,7 +19,7 @@ export default function DashboardPage() {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [members, setMembers] = useState<UserMember[]>([]);
   const [loading, setLoading] = useState(true);
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
 
   // Active view state
   const [selectedMember, setSelectedMember] = useState<UserMember | null>(null);
@@ -35,6 +35,7 @@ export default function DashboardPage() {
   const [previewFile, setPreviewFile] = useState<DriveFileItem | null>(null);
 
   useEffect(() => {
+    document.documentElement.classList.remove('dark');
     fetchSessionAndMembers();
   }, []);
 
