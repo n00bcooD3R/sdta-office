@@ -162,3 +162,24 @@ export async function deleteUser(id: string): Promise<boolean> {
   mockUsersStore = mockUsersStore.filter(u => u.id !== id);
   return true;
 }
+
+export async function updateUserPassword(userId: string, newPassword: string): Promise<boolean> {
+  const sql = getSql();
+  if (sql) {
+    try {
+      await sql`
+        UPDATE users
+        SET password = ${newPassword}
+        WHERE id = ${userId}
+      `;
+    } catch (err) {
+      console.warn('Error updating password in Neon DB:', err);
+    }
+  }
+
+  const idx = mockUsersStore.findIndex(u => u.id === userId);
+  if (idx !== -1) {
+    mockUsersStore[idx].password = newPassword;
+  }
+  return true;
+}
